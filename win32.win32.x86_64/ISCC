@@ -7,3 +7,6 @@ winebin=${winepath}/wine
 #[ -f "$scriptname" ] && scriptname=$(winepath -w "$scriptname")
 
 $winebin "C:\Program Files\Inno Setup 5\ISCC.exe" "$scriptname" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+if [ $? -ne 0 ]; then
+$winebin "C:\Program Files (x86)\Inno Setup 5\ISCC.exe" "$scriptname" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+fi
