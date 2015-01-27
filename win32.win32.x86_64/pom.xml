@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>jp.pizzafactory.express-installer</groupId>
+    <artifactId>parent</artifactId>
+    <version>8.5.0-SNAPSHOT</version>
+    <relativePath>../parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>win32.win32.x86_64</artifactId>
+  <packaging>jar</packaging>
+
+  <name>PizzaFactory Express Installer ${project.artifactId}</name>
+
+  <scm>
+    <connection>scm:git:https://github.com/PizzaFactory/express-installer.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/PizzaFactory/express-installer.git</developerConnection>
+    <url>https://github.com/PizzaFactory/express-installer.git</url>
+    <tag>master</tag>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>Eclipse Public License v1.0</name>
+      <comments>
+       All rights reserved.
+
+       This program and the accompanying materials are made
+       available under the terms of the Eclipse Public License v1.0
+       which accompanies this distribution, and is available at
+       http://www.eclipse.org/legal/epl-v10.htm
+      </comments>
+    </license>
+  </licenses>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.9</version>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>jp.pizzafactory.express</groupId>
+                  <artifactId>p2update</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>${project.artifactId}</classifier>
+                  <type>zip</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/pizza</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.3.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <workingDirectory>${project.basedir}</workingDirectory>
+              <executable>ISCC</executable>
+              <mainClass>pizza-setup.iss</mainClass>
+              <arguments>
+                <argument>target/classes/pizza-setup.iss</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>de.jutzig</groupId>
+        <artifactId>github-release-plugin</artifactId>
+        <version>1.1.0</version>
+        <executions>
+          <execution>
+            <id>github-upload</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>release</goal>
+            </goals>
+            <inherited>true</inherited>
+            <configuration>
+              <description>Alpha release. Your issue report appreciated</description>
+              <releaseName>${project.version}</releaseName>
+              <tag>${project.version}</tag>
+              <artifact>${project.build.directory}/pizza-setup-${project.artifactId}-${project.version}.exe</artifact>
+            </configuration>
+          </execution>
+         </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>jp.pizzafactory.express</groupId>
+      <artifactId>p2update</artifactId>
+      <version>${project.version}</version>
+      <classifier>${project.artifactId}</classifier>
+      <type>zip</type>
+    </dependency>
+  </dependencies>
+
+</project>
