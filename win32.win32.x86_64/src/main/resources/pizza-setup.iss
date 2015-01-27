@@ -4,7 +4,7 @@ AppName=${project.name}
 AppVerName=Release ${project.version}
 DefaultDirName={pf}\PizzaFactory\8
 DefaultGroupName=PizzaFactory
-UninstallDisplayIcon={app}\pizza8_5.exe
+UninstallDisplayIcon={app}\pizza8.exe
 Compression=lzma
 SolidCompression=yes
 
@@ -18,4 +18,4 @@ OutputDir=..
 Source: "../pizza/*"; DestDir: "{app}"; Flags: recursesubdirs
 
 [Icons]
-Name: "{group}\PizzaFactory8"; Filename: "{app}\pizza8_5.exe"
+Name: "{group}\PizzaFactory8"; Filename: "{app}\pizza8.exe"
