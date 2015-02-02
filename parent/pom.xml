@@ -33,6 +33,7 @@
   </scm>
 
   <modules>
+    <module>../linux.gtk.x86_64</module>
     <module>../win32.win32.x86_64</module>
     <module>../win32.win32.x86</module>
   </modules>
