@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.pizzafactory.express-installer</groupId>
   <artifactId>parent</artifactId>
-  <version>8.5.0.M20150120-0708</version>
+  <version>8.5.0.M20150202-0722</version>
   <packaging>pom</packaging>
   <name>express-installer</name>
 
